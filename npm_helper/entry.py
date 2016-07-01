@@ -32,15 +32,14 @@ def get_keywords():
 def urls_generation(keywords):
     try:
         assert type(keywords) is list
+        urls = [BASE_URL.format(query='+'.join(keywords), page=i) for i in range(1, 2)]
+        thread_generation(urls)
     except AssertionError:
         message.error_message('except to receive a list')
 
-    urls = [BASE_URL.format(query='+'.join(keywords), page=i) for i in range(1, 2)]
-    thread_generation(urls)
-
 
 def thread_generation(urls):
-    threads = ThreadCreator(main_spider=NpmSearchSpider, branch_spider=NpmPageSpider, main_thread_number=3)
+    threads = ThreadCreator(main_spider=NpmSearchSpider, branch_spider=NpmPageSpider)
     threads.get_entry_urls(urls)
     threads.finish_all_threads()
     print_table()
