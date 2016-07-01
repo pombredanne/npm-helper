@@ -12,6 +12,7 @@ Options:
 
 Examples:
     pnpm lazyloading
+    pnpm jquery-lazyloading
 """
 from docopt import docopt
 from npm_helper import BASE_URL, TABLE_HEADER, TABLE_ROW

@@ -1,10 +1,8 @@
 #!usr/bin/env python
 import ssl
 import re
-import json
-from urllib import request, error, parse
+from urllib import request, error
 from bs4 import BeautifulSoup
-from selenium import webdriver
 from spider_threads.utils import message
 from ..data import database_creator
 
@@ -48,7 +46,7 @@ class NpmPageSpider(object):
         package_name = package_name_container.find('a').string.strip()
         package_desc = content.find('p', attrs={"class": "package-description"}).string.strip()
         package["name"] = package_name
-        package["desc"] = package_desc
+        package["desc"] = package_desc[0:30:]
 
         # fetch sidebar info
         sidebar = soup.find('div', attrs={"class": "sidebar"})
