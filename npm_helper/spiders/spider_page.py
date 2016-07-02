@@ -43,8 +43,10 @@ class NpmPageSpider(object):
         # fetch name & desc
         content = soup.find('div', attrs={"class": "content-column"})
         package_name_container = content.find('h1', attrs={"class": "package-name"})
-        package_name = package_name_container.find('a').string.strip()
-        package_desc = content.find('p', attrs={"class": "package-description"}).string.strip()
+        package_name = package_name_container.find('a').string
+        package_name = package_name.strip() if package_name else ''
+        package_desc = content.find('p', attrs={"class": "package-description"}).string
+        package_desc = package_desc.strip() if package_desc else ''
         package["name"] = package_name
         package["desc"] = package_desc[0:30:]
 

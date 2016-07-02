@@ -7,8 +7,8 @@ Usage:
 Options:
     -h --help  显示帮助菜单
     -keywords  关键字
-    -s         按star数排序
-    -d         按下载量排序
+    # -s         按star数排序
+    # -d         按下载量排序
 
 Examples:
     pnpm lazyloading
@@ -22,35 +22,55 @@ from spider_threads.utils import message
 from .spiders.spider_list import NpmSearchSpider
 from .spiders.spider_page import NpmPageSpider
 from .data import database_creator
+# from .observer import Observer
+
+npm_helper = None
 
 
-def get_keywords():
-    arguments = docopt(__doc__, version="beta 0.1")
-    keywords = arguments['<keywords>'].split('-')
-    urls_generation(keywords)
+def npm_helper_creator():
+    global npm_helper
+    if npm_helper is None:
+        database = database_creator()
+        npm_helper = NpmHelper()
+        database.attach_observer(npm_helper)
+    return npm_helper
 
 
-def urls_generation(keywords):
-    try:
-        assert type(keywords) is list
-        urls = [BASE_URL.format(query='+'.join(keywords), page=i) for i in range(1, 2)]
-        thread_generation(urls)
-    except AssertionError:
-        message.error_message('except to receive a list')
+class NpmHelper(object):
+    def __init__(self):
+        arguments = docopt(__doc__, version="beta 0.1")
+        keywords = arguments['<keywords>'].split('-')
+        self.keywords = keywords
+        self.urls_generation()
 
+    def urls_generation(self):
+        keywords = self.keywords
+        try:
+            assert type(keywords) is list
+            urls = [BASE_URL.format(query='+'.join(keywords), page=i) for i in range(1, 2)]
+            NpmHelper.thread_generation(urls)
+        except AssertionError:
+            message.error_message('except to receive a list')
 
-def thread_generation(urls):
-    threads = ThreadCreator(main_spider=NpmSearchSpider, branch_spider=NpmPageSpider)
-    threads.get_entry_urls(urls)
-    threads.finish_all_threads()
-    print_table()
+    @staticmethod
+    def thread_generation(urls):
+        threads = ThreadCreator(main_spider=NpmSearchSpider, branch_spider=NpmPageSpider)
+        threads.get_entry_urls(urls)
+        threads.finish_all_threads()
+        # NpmHelper.detach_observer(self)
+        # NpmHelper.print_table()
 
+    # @staticmethod
+    # def print_table():
+    #     database = database_creator()
+    #     npm_table = PrettyTable(TABLE_HEADER)
+    #     for index, package in enumerate(database.data):
+    #         package["index"] = index
+    #         package_row = [package[item] for item in TABLE_ROW]
+    #         npm_table.add_row(package_row)
+    #     print(npm_table)
 
-def print_table():
-    database = database_creator()
-    npm_table = PrettyTable(TABLE_HEADER)
-    for index, package in enumerate(database.data):
-        package["index"] = index
-        package_row = [package[item] for item in TABLE_ROW]
-        npm_table.add_row(package_row)
-    print(npm_table)
+    @staticmethod
+    def update(data):
+        print(data)
+

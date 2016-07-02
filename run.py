@@ -2,7 +2,7 @@
 NPM HELPER
 """
 
-from npm_helper.entry import get_keywords
+from npm_helper.entry import npm_helper_creator
 
 if __name__ == '__main__':
-    get_keywords()
+    npm_helper_creator()

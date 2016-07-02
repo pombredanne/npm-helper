@@ -1,5 +1,6 @@
 #!usr/env/bin python
 import threading
+from .observer import Observer
 
 lock = threading.Lock()
 database = None
@@ -16,13 +17,13 @@ def database_creator():
     return database
 
 
-class Database(object):
+class Database(Observer):
     def __init__(self):
+        super().__init__()
         self.data = []
 
     def append_data(self, data):
         lock.acquire()
         self.data.append(data)
+        self.notify(data)
         lock.release()
-
-
