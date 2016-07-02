@@ -25,7 +25,7 @@ class NpmPageSpider(object):
         self.url = url
 
     def request_page(self):
-        print('fetch {}'.format(self.url))
+        # print('fetch {}'.format(self.url))
         try:
             req = request.Request(self.url, headers=self.headers)
             response = request.urlopen(req).read().decode('UTF-8')

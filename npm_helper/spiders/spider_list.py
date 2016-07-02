@@ -20,7 +20,7 @@ class NpmSearchSpider(object):
 
     def request_urls(self):
         search_result = list()
-        print('fetch {}'.format(self.url))
+        # print('fetch {}'.format(self.url))
         try:
             req = request.Request(self.url, headers=self.headers)
             response = request.urlopen(req).read().decode('UTF-8')

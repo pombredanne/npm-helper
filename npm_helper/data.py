@@ -24,6 +24,8 @@ class Database(Observer):
 
     def append_data(self, data):
         lock.acquire()
+        index = len(self.data)
+        data['index'] = index
         self.data.append(data)
         self.notify(data)
         lock.release()
