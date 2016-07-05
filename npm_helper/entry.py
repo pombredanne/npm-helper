@@ -17,9 +17,9 @@ Examples:
 from docopt import docopt
 from npm_helper import BASE_URL, TABLE_HEADER, TABLE_ROW
 from prettytable import PrettyTable
-from spider_threads.entry import ThreadCreator
-from spider_threads.utils import message
-from spider_threads.config import config_creator
+from threads_creator.entry import ThreadCreator
+from threads_creator.utils import message
+from threads_creator.config import config_creator
 from .spiders.spider_list import NpmSearchSpider
 from .spiders.spider_page import NpmPageSpider
 from .data import database_creator

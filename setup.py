@@ -16,7 +16,7 @@ setup(
     install_requires=[
         'prettytable',
         'bs4',
-        'spider_threads'
+        'threads_creator'
     ],
     entry_points={
         'console_scripts': ['pnpm=run:get_keywords']

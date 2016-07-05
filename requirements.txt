@@ -2,4 +2,4 @@ docopt
 prettytable
 colorama
 bs4
-spider_threads
+threads_creator

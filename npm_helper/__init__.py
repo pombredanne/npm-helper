@@ -3,7 +3,7 @@
 NPM HELPER
 """
 
-__version__ = '0.15'
+__version__ = '0.20'
 
 BASE_URL = 'https://www.npmjs.com/search?q={query}&page={page}'
 

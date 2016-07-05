@@ -3,7 +3,7 @@ import ssl
 import re
 from urllib import request, error
 from bs4 import BeautifulSoup
-from spider_threads.utils import message
+from threads_creator.utils import message
 from ..data import database_creator
 
 ssl._create_default_https_context = ssl._create_unverified_context
